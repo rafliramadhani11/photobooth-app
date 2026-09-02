@@ -52,9 +52,15 @@ return [
 
     'channels' => [
 
+        // 'stack' => [
+        //     'driver' => 'stack',
+        //     'channels' => explode(',', (string) env('LOG_STACK', 'single')),
+        //     'ignore_exceptions' => false,
+        // ],
+
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', (string) env('LOG_STACK', 'single')),
+            'channels' => ['single', 'stderr'],
             'ignore_exceptions' => false,
         ],
 
@@ -102,15 +108,25 @@ return [
             'processors' => [PsrLogMessageProcessor::class],
         ],
 
+        // 'stderr' => [
+        //     'driver' => 'monolog',
+        //     'level' => env('LOG_LEVEL', 'debug'),
+        //     'handler' => StreamHandler::class,
+        //     'handler_with' => [
+        //         'stream' => 'php://stderr',
+        //     ],
+        //     'formatter' => env('LOG_STDERR_FORMATTER'),
+        //     'processors' => [PsrLogMessageProcessor::class],
+        // ],
+
         'stderr' => [
             'driver' => 'monolog',
-            'level' => env('LOG_LEVEL', 'debug'),
+            'level' => 'debug',
             'handler' => StreamHandler::class,
-            'handler_with' => [
+            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
                 'stream' => 'php://stderr',
             ],
-            'formatter' => env('LOG_STDERR_FORMATTER'),
-            'processors' => [PsrLogMessageProcessor::class],
         ],
 
         'syslog' => [
