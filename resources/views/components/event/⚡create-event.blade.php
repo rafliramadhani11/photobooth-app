@@ -9,7 +9,6 @@ new class extends Component {
     public ?string $desc = null;
     public ?string $location = null;
     public string $event_date = '';
-    public bool $is_active = false;
 
     public function save(): void
     {
@@ -18,7 +17,6 @@ new class extends Component {
             'desc' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'event_date' => 'required|date',
-            'is_active' => 'boolean',
         ]);
 
         Event::create($validated);
@@ -59,10 +57,6 @@ new class extends Component {
             {{-- Description --}}
             <flux:textarea wire:model="desc" label="Deskripsi" placeholder="Catatan atau keterangan paket (opsional)..."
                 rows="3" />
-
-            {{-- Is Active Status --}}
-            <flux:switch accent="emerald" wire:model="is_active" label="Aktifkan Event"
-                description="Event aktif dapat dipilih pada transaksi kasir/booth." />
 
             {{-- Actions --}}
             <div class="flex items-center gap-2 pt-2">

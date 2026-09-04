@@ -13,6 +13,7 @@ Route::middleware(['guest'])->group(function () {
 // APP ------------------------------------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('events', 'pages.app.event.index')->name('event.index');
+    Route::livewire('events/{event:id}/detail', 'pages::app.event.show')->name('event.show');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Event extends Model
+class Package extends Model
 {
     protected $guarded = ['id'];
 
-    public function packages(): BelongsToMany
+    public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Package::class);
+        return $this->belongsToMany(Event::class);
     }
 }

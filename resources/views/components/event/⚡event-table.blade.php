@@ -28,18 +28,6 @@ new class extends Component {
         }
     }
 
-    public function toggleStatus(int $eventId)
-    {
-        $event = Event::findOrFail($eventId);
-
-        $event->is_active = !$event->is_active;
-        $event->save();
-
-        $statusText = $event->is_active ? 'diaktifkan' : 'dinonaktifkan';
-
-        Flux::toast(variant: 'success', text: "Event \"{$event->name}\" berhasil {$statusText}.");
-    }
-
     #[Computed]
     public function events()
     {
@@ -57,77 +45,92 @@ new class extends Component {
             wire:click="sort('event_date')">Tanggal & Lokasi</flux:table.column>
 
         <flux:table.column sortable :sorted="$sortBy === 'is_active'" :direction="$sortDirection"
-            wire:click="sort('is_active')">Status</flux:table.column>
+            wire:click="sort('created_at')">Status</flux:table.column>
 
         <flux:table.column sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection"
             wire:click="sort('created_at')">Dibuat Pada</flux:table.column>
 
-        <flux:table.column align="end"></flux:table.column>
+        <flux:table.column></flux:table.column>
     </flux:table.columns>
 
     <flux:table.rows>
-        @foreach ($this->events as $event)
-            <flux:table.row :key="$event->id">
-                {{-- Nama & Deskripsi --}}
-                <flux:table.cell>
-                    <div class="flex flex-col">
-                        <span class="font-medium text-zinc-900 dark:text-zinc-100">{{ $event->name }}</span>
-                        @if ($event->desc)
-                            <span class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1 max-w-xs"
-                                title="{{ $event->desc }}">
-                                {{ $event->desc }}
-                            </span>
-                        @endif
+        @forelse ($this->events as $event)
+        <flux:table.row :key="$event->id">
+            {{-- Nama & Deskripsi --}}
+            <flux:table.cell>
+                <div class="flex flex-col">
+                    <span class="font-medium text-zinc-900 dark:text-zinc-100">{{ $event->name }}</span>
+                    @if ($event->desc)
+                    <span class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1 max-w-xs"
+                        title="{{ $event->desc }}">
+                        {{ $event->desc }}
+                    </span>
+                    @endif
+                </div>
+            </flux:table.cell>
+
+            {{-- Tanggal & Lokasi --}}
+            <flux:table.cell>
+                <div class="flex flex-col gap-1 text-xs">
+                    <div class="flex items-center gap-1.5 font-medium text-zinc-800 dark:text-zinc-200">
+                        <flux:icon icon="calendar" class="size-3.5 text-zinc-400" />
+                        <span>{{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}</span>
                     </div>
-                </flux:table.cell>
-
-                {{-- Tanggal & Lokasi --}}
-                <flux:table.cell>
-                    <div class="flex flex-col text-xs">
-                        <span class="font-medium text-zinc-800 dark:text-zinc-200">
-                            {{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}
-                        </span>
-                        <span class="text-zinc-500 dark:text-zinc-400">
-                            {{ $event->location ?? '-' }}
-                        </span>
+                    @if ($event->location)
+                    <div class="flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400">
+                        <flux:icon icon="map-pin" class="size-3.5 text-zinc-400" />
+                        <span class="truncate max-w-45">{{ $event->location }}</span>
                     </div>
-                </flux:table.cell>
+                    @else
+                    <span class="text-zinc-400 dark:text-zinc-600 pl-5">-</span>
+                    @endif
+                </div>
+            </flux:table.cell>
 
-                {{-- Status Badge --}}
-                <flux:table.cell class="gap-x-3 flex items-center">
-                    {{-- Switch dengan animasi & proteksi disabled saat loading --}}
-                    <flux:switch accent="emerald" :checked="$event->is_active"
-                        wire:change="toggleStatus({{ $event->id }})" wire:loading.attr="disabled"
-                        wire:target="toggleStatus({{ $event->id }})"
-                        class="wire-loading:opacity-50 cursor-pointer disabled:cursor-not-allowed" />
+            <flux:table.cell class="whitespace-nowrap text-xs text-zinc-500 dark:text-zinc-400">
+                <livewire:event.active-switch-event :event="$event" />
+            </flux:table.cell>
 
-                    {{-- Badge Normal (Sembunyi saat loading) --}}
-                    <flux:badge wire:loading.remove wire:target="toggleStatus({{ $event->id }})" size="sm"
-                        inset="top bottom" :color="$event->is_active ? 'emerald' : 'zinc'">
-                        {{ $event->is_active ? 'Aktif' : 'Nonaktif' }}
-                    </flux:badge>
+            {{-- Tanggal Dibuat --}}
+            <flux:table.cell class="whitespace-nowrap text-xs text-zinc-500 dark:text-zinc-400">
+                {{ $event->created_at?->format('d M Y, H:i') }}
+            </flux:table.cell>
 
-                    {{-- Badge Loading (Muncul hanya saat request toggleStatus berjalan) --}}
-                    <flux:icon wire:loading wire:target="toggleStatus({{ $event->id }})" icon="arrow-path"
-                        class="size-4 animate-spin" />
-                </flux:table.cell>
+            {{-- Action Menu --}}
+            <flux:table.cell>
+                <div class="flex items-center justify-end gap-2">
+                    {{-- Detail Event Button --}}
+                    <flux:button href="{{ route('event.show', $event) }}" wire:navigate icon="magnifying-glass"
+                        size="sm" variant="primary" color="sky" class="text-xs cursor-pointer">
+                        Detail
+                    </flux:button>
 
-                {{-- Tanggal Dibuat --}}
-                <flux:table.cell class="text-xs text-zinc-500 dark:text-zinc-400">
-                    {{ $event->created_at?->format('d M Y, H:i') }}
-                </flux:table.cell>
+                    {{-- Edit Modal Trigger --}}
+                    <livewire:event.edit-event :event="$event" :key="'edit-event-' . $event->id" />
 
-                {{-- Action Menu --}}
-                <flux:table.cell>
-                    <div class="flex items-center justify-end gap-3" wire:loading.attr="disabled">
-                        {{-- Edit Modal Trigger --}}
-                        <livewire:event.edit-event :event="$event" :key="'edit-event-' . $event->id" />
-
-                        {{-- Delete Button --}}
-                        <livewire:event.delete-event :event="$event" :key="'delete-event-' . $event->id" />
+                    {{-- Delete Button --}}
+                    <livewire:event.delete-event :event="$event" :key="'delete-event-' . $event->id" />
+                </div>
+            </flux:table.cell>
+        </flux:table.row>
+        @empty
+        {{-- Empty State Tampilan Saat Data Kosong --}}
+        <flux:table.row>
+            <flux:table.cell colspan="4" class="py-12 text-center">
+                <div class="flex flex-col items-center justify-center gap-3">
+                    <div class="p-3 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-400 dark:text-zinc-500">
+                        <flux:icon icon="calendar-days" class="size-8 stroke-1.5" />
                     </div>
-                </flux:table.cell>
-            </flux:table.row>
-        @endforeach
+                    <div class="space-y-1">
+                        <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Belum Ada Event</p>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
+                            Belum ada acara photo booth yang terdaftar. <br>
+                            Klik tombol <b>New Event</b> untuk membuat event baru.
+                        </p>
+                    </div>
+                </div>
+            </flux:table.cell>
+        </flux:table.row>
+        @endforelse
     </flux:table.rows>
 </flux:table>

@@ -11,7 +11,6 @@ new class extends Component {
     public ?string $desc = null;
     public ?string $location = null;
     public string $event_date = '';
-    public bool $is_active = false;
 
     public function mount(): void
     {
@@ -19,7 +18,6 @@ new class extends Component {
         $this->desc = $this->event->desc;
         $this->location = $this->event->location;
         $this->event_date = $this->event->event_date;
-        $this->is_active = $this->event->is_active;
     }
 
     public function update(): void
@@ -29,7 +27,7 @@ new class extends Component {
             'desc' => 'nullable|string',
             'location' => 'nullable|string|max:255',
             'event_date' => 'required|date',
-            'is_active' => 'boolean',
+
         ]);
 
         $this->event->update($validated);
@@ -66,9 +64,6 @@ new class extends Component {
 
             <flux:textarea wire:model="desc" label="Deskripsi" placeholder="Catatan atau keterangan paket..."
                 rows="3" />
-
-            <flux:switch accent="emerald" wire:model="is_active" label="Aktifkan Event"
-                description="Event aktif dapat dipilih pada transaksi kasir/booth." />
 
             <div class="flex items-center gap-2 pt-2">
                 <flux:spacer />

@@ -23,7 +23,9 @@ new class extends Component {
 <div>
     {{-- Trigger Button dengan Ikon Trash --}}
     <flux:modal.trigger :name="'delete-event-' . $event->id">
-        <flux:button icon="trash" size="sm" variant="danger" tooltip="Hapus Event" class="cursor-pointer" />
+        <flux:button icon="trash" size="sm" variant="danger" tooltip="Hapus Event" class="cursor-pointer">
+            Hapus
+        </flux:button>
     </flux:modal.trigger>
 
     {{-- Modal Konfirmasi Hapus --}}
@@ -33,7 +35,7 @@ new class extends Component {
                 <flux:heading size="lg">Hapus Event?</flux:heading>
                 <flux:subheading class="mt-1">
                     Apakah kamu yakin ingin menghapus event <strong
-                        class="text-zinc-900 dark:text-white">{{ $event->name }}</strong>? Tindakan ini tidak dapat
+                        class="text-zinc-900 dark:text-white">{{ $event->name }}</strong> ? Tindakan ini tidak dapat
                     dibatalkan.
                 </flux:subheading>
             </div>
