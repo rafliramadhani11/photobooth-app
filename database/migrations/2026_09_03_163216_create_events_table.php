@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('desc')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->string('location')->nullable();
+            $table->date('event_date');
             $table->timestamps();
         });
     }

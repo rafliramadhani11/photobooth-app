@@ -22,7 +22,7 @@
         <flux:sidebar.nav>
             <flux:sidebar.group heading="App">
                 <flux:sidebar.item :href="route('event.index')" :current="request()->routeIs('event*')" wire:navigate>
-                    {{ __('Event') }}
+                    {{ __('Event Organizer') }}
                 </flux:sidebar.item>
             </flux:sidebar.group>
         </flux:sidebar.nav>
