@@ -23,7 +23,7 @@ export default function PhotoBoothForm({ className }: PhotoBoothForm) {
         <FieldSet className={cn("w-full", className)}>
             <FieldGroup>
                 {/* ATAS NAMA SIAPA */}
-                <Field>
+                <Field className="w-full">
                     <FieldLabel htmlFor="name" className="font-semibold">
                         1. Atas Nama Siapa ?
                         <span className="text-destructive">*</span>
@@ -41,16 +41,13 @@ export default function PhotoBoothForm({ className }: PhotoBoothForm) {
                     </InputGroup>
                 </Field>
 
-                {/* ATAS NAMA SIAPA */}
-                <Field>
+                {/* PAKET PHOTOBOOTH */}
+                <Field className="w-full">
                     <FieldLabel htmlFor="name" className="font-semibold">
                         2. Paket Photobooth
                         <span className="text-destructive">*</span>
                     </FieldLabel>
-                    <RadioGroup
-                        defaultValue="plus"
-                        className="max-w-sm flex justify-between items-center"
-                    >
+                    <RadioGroup defaultValue="plus">
                         <FieldLabel htmlFor="plus-plan">
                             <Field
                                 orientation="horizontal"
@@ -68,7 +65,8 @@ export default function PhotoBoothForm({ className }: PhotoBoothForm) {
                     </RadioGroup>
                 </Field>
 
-                <div>
+                {/* FORM ACTIONS */}
+                <div className="w-full">
                     <Button
                         size="lg"
                         className="w-full py-6 text-base font-bold shadow-lg transition-all duration-200 hover:scale-[1.01] active:scale-[0.98] flex items-center justify-between px-6 group"
