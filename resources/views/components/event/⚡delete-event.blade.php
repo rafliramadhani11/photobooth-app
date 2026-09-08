@@ -2,6 +2,7 @@
 
 use App\Models\Event;
 use Flux\Flux;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 new class extends Component {
@@ -10,6 +11,8 @@ new class extends Component {
     public function delete(): void
     {
         $this->event->delete();
+
+        Storage::disk('public')->delete($this->event->logo);
 
         Flux::modal('delete-event-' . $this->event->id)->close();
         Flux::toast(variant: 'success', text: 'Event berhasil dihapus.');

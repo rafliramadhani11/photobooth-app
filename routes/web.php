@@ -1,8 +1,15 @@
 <?php
 
+use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Route;
+use Xendit\Configuration;
+use Xendit\Invoice\InvoiceApi;
+use Xendit\PaymentMethod\PaymentMethodApi;
 
 Route::inertia('/', 'welcome')->name('home');
+
+Route::post('/', [TransactionController::class, 'store'])->name('transaction.store');
 
 // AUTH ------------------------------------------------------------------------------------
 Route::middleware(['guest'])->group(function () {

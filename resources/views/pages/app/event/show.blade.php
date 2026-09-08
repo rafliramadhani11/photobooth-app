@@ -103,33 +103,7 @@ new class extends Component {
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {{-- Left Column: Detail Info & Quick Status --}}
         <div class="lg:col-span-1 space-y-6">
-            <flux:card class="space-y-4">
-                <div>
-                    <flux:heading size="lg">Detail Event</flux:heading>
-                    <flux:subheading>Informasi umum acara photo booth.</flux:subheading>
-                </div>
-
-                <flux:separator variant="subtle" />
-
-                <div class="space-y-4 text-sm">
-                    <div>
-                        <span class="text-xs text-zinc-500 dark:text-zinc-400 block">Nama Event</span>
-                        <span class="font-medium text-zinc-900 dark:text-white">{{ $event->name }}</span>
-                    </div>
-
-                    <div>
-                        <span class="text-xs text-zinc-500 dark:text-zinc-400 block">Deskripsi</span>
-                        <p class="text-zinc-700 dark:text-zinc-300 mt-1 text-xs leading-relaxed">
-                            {{ $event->desc ?: 'Tidak ada deskripsi.' }}
-                        </p>
-                    </div>
-
-                    <div>
-                        <span class="text-xs text-zinc-500 dark:text-zinc-400 block mb-1">Status Operasional</span>
-                        <livewire:event.active-switch-event :event="$event" :key="'active-switch-' . $event->id" />
-                    </div>
-                </div>
-            </flux:card>
+            <livewire:event.detail-event :event="$event" :key="'detail-event-' . $event->id" />
         </div>
 
         {{-- Right Column: Placeholders for Package & Customer Data --}}
