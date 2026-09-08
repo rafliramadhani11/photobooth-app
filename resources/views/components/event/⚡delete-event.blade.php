@@ -17,7 +17,6 @@ new class extends Component {
         Flux::modal('delete-event-' . $this->event->id)->close();
         Flux::toast(variant: 'success', text: 'Event berhasil dihapus.');
 
-        // Memicu refresh data pada tabel
         $this->dispatch('event-updated');
     }
 };

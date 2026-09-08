@@ -79,7 +79,7 @@ new class extends Component {
             </div>
             <div>
                 <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Lokasi / Venue</p>
-                <p class="text-base font-semibold text-zinc-900 dark:text-white truncate max-w-[200px]">
+                <p class="text-base font-semibold text-zinc-900 dark:text-white truncate max-w-50">
                     {{ $event->location ?? 'Belum Diatur' }}
                 </p>
             </div>

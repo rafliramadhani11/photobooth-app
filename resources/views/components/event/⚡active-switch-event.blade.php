@@ -29,11 +29,10 @@ new class extends Component {
 
     {{-- Badge Normal (Tampil saat idle) --}}
     <flux:badge wire:loading.remove wire:target="toggleStatus" size="sm" inset="top bottom"
-        :color="$event->is_active ? 'emerald' : 'zinc'">
+        :color="$event->is_active ? 'emerald' : 'zinc'" :icon="$event->is_active ? 'check-circle' : 'x-circle'">
         {{ $event->is_active ? 'Aktif' : 'Nonaktif' }}
     </flux:badge>
 
 
     <flux:icon wire:loading wire:target="toggleStatus" icon="arrow-path" class="size-3 animate-spin" />
-
 </div>

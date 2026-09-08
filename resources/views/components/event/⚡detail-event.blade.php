@@ -65,6 +65,11 @@ new class extends Component {
     <flux:separator variant="subtle" />
 
     <form class="space-y-4" wire:submit="update">
+        <div class="pt-1">
+            <span class="text-xs text-zinc-500 dark:text-zinc-400 block mb-1.5 font-medium">Status Operasional</span>
+            <livewire:event.active-switch-event :event="$event" :key="'active-switch-' . $event->id" />
+        </div>
+
         {{-- Preview & Logo / Foto Event --}}
         <div class="space-y-2">
             <flux:label>Logo / Foto Event</flux:label>
@@ -106,7 +111,7 @@ new class extends Component {
                         <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Digunakan saat ini</p>
                         <div class="mt-2 flex items-center gap-2">
                             <label
-                                class="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg bg-zinc-100 dark:bg-zinc-750 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 transition-colors">
+                                class="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-600 text-zinc-700 dark:text-zinc-200 transition-colors">
                                 <flux:icon icon="arrow-path" class="size-3.5" />
                                 <span>Ganti Foto</span>
                                 <input wire:model="logo" type="file" accept="image/*" class="sr-only" />
@@ -149,18 +154,7 @@ new class extends Component {
         <flux:textarea wire:model="desc" label="Deskripsi" placeholder="Catatan atau keterangan event..."
             rows="3" />
 
-        {{-- Status Operasional --}}
-        <div class="pt-1">
-            <span class="text-xs text-zinc-500 dark:text-zinc-400 block mb-1.5 font-medium">Status Operasional</span>
-            <livewire:event.active-switch-event :event="$event" :key="'active-switch-' . $event->id" />
-        </div>
-
-        <flux:separator variant="subtle" />
-
         {{-- Actions --}}
-        <div class="flex items-center justify-end gap-2 pt-1">
-            <flux:button type="button" variant="ghost">Batal</flux:button>
-            <flux:button type="submit" variant="primary">Simpan Perubahan</flux:button>
-        </div>
+        <flux:button type="submit" variant="primary" class="w-full">Simpan Perubahan</flux:button>
     </form>
 </flux:card>
