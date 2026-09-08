@@ -1,6 +1,8 @@
+import EventController from './EventController'
 import TransactionController from './TransactionController'
 const Controllers = {
-    TransactionController: Object.assign(TransactionController, TransactionController),
+    EventController: Object.assign(EventController, EventController),
+TransactionController: Object.assign(TransactionController, TransactionController),
 }
 
 export default Controllers

@@ -9,19 +9,36 @@ new class extends Component {
 
     public string $name = '';
     public ?string $desc = null;
+    public string $price = '';
 
     public function mount(): void
     {
         $this->name = $this->package->name;
         $this->desc = $this->package->desc;
+        $this->price = $this->package->price ? number_format((int) $this->package->price, 0, ',', '.') : '';
+    }
+
+    public function updatedPrice(string $value): void
+    {
+        $clean = preg_replace('/\D/', '', $value);
+
+        if ($clean !== '') {
+            $this->price = number_format((int) $clean, 0, ',', '.');
+        } else {
+            $this->price = '';
+        }
     }
 
     public function update(): void
     {
+        $cleanPrice = $this->price !== '' ? (int) str_replace('.', '', $this->price) : null;
+
         $validated = $this->validate([
             'name' => 'required|string|max:255',
             'desc' => 'nullable|string',
         ]);
+
+        $validated['price'] = $cleanPrice;
 
         $this->package->update($validated);
 
@@ -51,6 +68,22 @@ new class extends Component {
             {{-- Input Nama Paket --}}
             <flux:input wire:model="name" label="Nama Paket" placeholder="Contoh: Paket High School (3 Frame)"
                 required />
+
+            {{-- Input Harga Paket --}}
+            <div x-data="{
+                format(el) {
+                    let val = el.value.replace(/\D/g, '');
+                    el.value = val ? new Intl.NumberFormat('id-ID').format(val) : '';
+                }
+            }">
+                <flux:input
+                    wire:model.live.debounce.300ms="price"
+                    x-on:input="format($el)"
+                    label="Harga Paket (Rp)"
+                    placeholder="Contoh: 10.000"
+                    inputmode="numeric"
+                />
+            </div>
 
             {{-- Input Deskripsi Paket --}}
             <flux:textarea wire:model="desc" label="Deskripsi"

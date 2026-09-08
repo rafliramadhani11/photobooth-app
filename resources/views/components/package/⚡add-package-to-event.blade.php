@@ -63,7 +63,10 @@ new class extends Component {
 
         <form wire:submit="attach" class="space-y-4">
             {{-- Dropdown Searchable Paket --}}
-            <flux:select wire:model="package_id" label="Pilih Paket" placeholder="Cari atau pilih paket..." searchable>
+            <flux:select wire:model="package_id" label="Pilih Paket">
+                <flux:select.option selected>
+                    Pilih paket yang akan dikaitkan
+                </flux:select.option>
                 @forelse ($this->availablePackages as $package)
                     <flux:select.option :value="$package->id">
                         {{ $package->name }}

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../
 /**
 * @see \App\Http\Controllers\TransactionController::store
  * @see app/Http/Controllers/TransactionController.php:9
- * @route '/'
+ * @route '/transactions'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/',
+    url: '/transactions',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\TransactionController::store
  * @see app/Http/Controllers/TransactionController.php:9
- * @route '/'
+ * @route '/transactions'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\TransactionController::store
  * @see app/Http/Controllers/TransactionController.php:9
- * @route '/'
+ * @route '/transactions'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),

@@ -7,13 +7,32 @@ use Livewire\Component;
 new class extends Component {
     public string $name = '';
     public ?string $desc = null;
+    public string $price = '';
+
+    public function updatedPrice(string $value): void
+    {
+        // Bersihkan semua karakter selain angka
+        $clean = preg_replace('/\D/', '', $value);
+
+        if ($clean !== '') {
+            // Format ribuan dengan titik (contoh: 10000 -> 10.000)
+            $this->price = number_format((int) $clean, 0, ',', '.');
+        } else {
+            $this->price = '';
+        }
+    }
 
     public function save(): void
     {
+        // Hilangkan titik pemisah ribuan sebelum validasi dan simpan ke DB
+        $cleanPrice = $this->price !== '' ? (int) str_replace('.', '', $this->price) : null;
+
         $validated = $this->validate([
             'name' => 'required|string|max:255',
             'desc' => 'nullable|string',
         ]);
+
+        $validated['price'] = $cleanPrice;
 
         Package::create($validated);
 
@@ -46,6 +65,22 @@ new class extends Component {
             {{-- Input Nama Paket --}}
             <flux:input wire:model="name" label="Nama Paket" placeholder="Contoh: Paket High School (3 Frame)"
                 required />
+
+            {{-- Input Harga Paket --}}
+            <div x-data="{
+                format(el) {
+                    let val = el.value.replace(/\D/g, '');
+                    el.value = val ? new Intl.NumberFormat('id-ID').format(val) : '';
+                }
+            }">
+                <flux:input
+                    wire:model.live.debounce.300ms="price"
+                    x-on:input="format($el)"
+                    label="Harga Paket (Rp)"
+                    placeholder="Contoh: 10.000"
+                    inputmode="numeric"
+                />
+            </div>
 
             {{-- Input Deskripsi Paket --}}
             <flux:textarea wire:model="desc" label="Deskripsi"

@@ -43,6 +43,8 @@ new class extends Component {
         <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection"
             wire:click="sort('name')">Nama Paket</flux:table.column>
 
+        <flux:table.column>Harga</flux:table.column>
+
         <flux:table.column sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection"
             wire:click="sort('created_at')">Dibuat Pada</flux:table.column>
 
@@ -63,6 +65,11 @@ new class extends Component {
                             </span>
                         @endif
                     </div>
+                </flux:table.cell>
+
+                {{-- Harga Paket --}}
+                <flux:table.cell class="whitespace-nowrap font-medium text-emerald-600 dark:text-emerald-400">
+                    {{ $package->price ? 'Rp ' . number_format($package->price, 0, ',', '.') : '-' }}
                 </flux:table.cell>
 
                 {{-- Tanggal Dibuat --}}

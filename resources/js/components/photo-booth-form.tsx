@@ -16,16 +16,26 @@ import { cn } from "@/lib/utils";
 import { Form } from "@inertiajs/react";
 import TransactionController from "@/actions/App/Http/Controllers/TransactionController";
 
-interface PhotoBoothForm {
+import { PackageItem } from "@/pages/welcome";
+
+interface PhotoBoothFormProps {
     className?: string;
+    eventId?: number;
+    packages?: PackageItem[];
 }
 
-export default function PhotoBoothForm({ className }: PhotoBoothForm) {
+export default function PhotoBoothForm({
+    className,
+    eventId,
+    packages = [],
+}: PhotoBoothFormProps) {
     return (
         <Form
             action={TransactionController.store()}
             className={cn("w-full", className)}
         >
+            {eventId && <input type="hidden" name="event_id" value={eventId} />}
+
             <FieldSet>
                 <FieldGroup>
                     {/* ATAS NAMA SIAPA */}
@@ -40,7 +50,7 @@ export default function PhotoBoothForm({ className }: PhotoBoothForm) {
                             </InputGroupAddon>
                             <InputGroupInput
                                 required
-                                name=""
+                                name="customer_name"
                                 id="name"
                                 autoComplete="off"
                                 placeholder="Nama Kamu"
@@ -50,29 +60,68 @@ export default function PhotoBoothForm({ className }: PhotoBoothForm) {
 
                     {/* PAKET PHOTOBOOTH */}
                     <Field className="w-full">
-                        <FieldLabel htmlFor="name" className="font-semibold">
+                        <FieldLabel className="font-semibold">
                             2. Paket Photobooth
                             <span className="text-destructive">*</span>
                         </FieldLabel>
-                        <RadioGroup defaultValue="plus">
-                            <FieldLabel htmlFor="plus-plan">
-                                <Field
-                                    orientation="horizontal"
-                                    className="shadow-lg"
-                                >
-                                    <FieldContent>
-                                        <FieldTitle>PAKET 1</FieldTitle>
-                                        <FieldDescription className="text-xs">
-                                            Soft File HD + Cetak Foto Fisik
-                                        </FieldDescription>
-                                    </FieldContent>
-                                    <RadioGroupItem
-                                        value="plus"
-                                        id="plus-plan"
-                                    />
-                                </Field>
-                            </FieldLabel>
-                        </RadioGroup>
+
+                        {packages.length > 0 ? (
+                            <RadioGroup
+                                name="package_id"
+                                defaultValue={packages[0]?.id?.toString()}
+                                className="flex flex-col gap-3 w-full"
+                            >
+                                {packages.map((pkg, idx) => {
+                                    // Dummy harga jika pkg.price belum diset di database
+                                    const rawPrice = pkg.price;
+                                    const formattedPrice =
+                                        typeof rawPrice === "number"
+                                            ? new Intl.NumberFormat("id-ID", {
+                                                  style: "currency",
+                                                  currency: "IDR",
+                                                  maximumFractionDigits: 0,
+                                              }).format(rawPrice)
+                                            : rawPrice;
+
+                                    return (
+                                        <FieldLabel
+                                            key={pkg.id}
+                                            htmlFor={`package-${pkg.id}`}
+                                            className="cursor-pointer"
+                                        >
+                                            <Field
+                                                orientation="horizontal"
+                                                className="shadow-sm hover:shadow-md transition-shadow duration-200 py-3 px-3.5"
+                                            >
+                                                <FieldContent>
+                                                    <div className="flex items-center gap-2 flex-wrap">
+                                                        <FieldTitle className="font-bold tracking-tight">
+                                                            {pkg.name}
+                                                        </FieldTitle>
+                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-primary/10 text-primary dark:bg-primary/20">
+                                                            {formattedPrice}
+                                                        </span>
+                                                    </div>
+                                                    {pkg.desc && (
+                                                        <FieldDescription className="text-xs text-muted-foreground mt-0.5">
+                                                            {pkg.desc}
+                                                        </FieldDescription>
+                                                    )}
+                                                </FieldContent>
+                                                <RadioGroupItem
+                                                    value={pkg.id.toString()}
+                                                    id={`package-${pkg.id}`}
+                                                />
+                                            </Field>
+                                        </FieldLabel>
+                                    );
+                                })}
+                            </RadioGroup>
+                        ) : (
+                            <div className="p-4 rounded-xl border border-dashed border-border text-center text-xs text-muted-foreground">
+                                Belum ada paket yang tersedia untuk event ini.
+                            </div>
+                        )}
                     </Field>
 
                     {/* FORM ACTIONS */}
