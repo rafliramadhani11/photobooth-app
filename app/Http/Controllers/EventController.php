@@ -19,8 +19,8 @@ class EventController extends Controller
             $event->logo_url = asset('storage/' . $event->logo);
         }
 
-        return Inertia::render('welcome', [
-            'event' => $event,
-        ]);
+        $title = config('app.name');
+
+        return Inertia::render('welcome', compact('event', 'title'));
     }
 }

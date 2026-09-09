@@ -14,7 +14,11 @@
 
             </div>
         </div>
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-        </div>
+
+
+        <form action="/test-doku" method="POST">
+            @csrf
+            <button type="submit">Test Checkout DOKU</button>
+        </form>
     </div>
 </x-layouts::app>

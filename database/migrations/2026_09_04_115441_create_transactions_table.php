@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_id');
             $table->foreignId('package_id');
-            $table->string('transaction_code');
+            $table->string('invoice');
             $table->string('customer_name');
             $table->timestamps();
         });

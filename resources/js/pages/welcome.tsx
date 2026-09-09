@@ -1,7 +1,14 @@
 import PhotoBoothForm from "@/components/photo-booth-form";
 import App from "@/layouts/app";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import { Calendar, MapPin } from "lucide-react";
+import { useEffect } from "react";
+
+declare global {
+    interface Window {
+        loadJokulCheckout: (url: string) => void;
+    }
+}
 
 export interface PackageItem {
     id: number;
@@ -23,10 +30,23 @@ export interface EventData {
 }
 
 interface WelcomeProps {
+    title: string;
     event: EventData | null;
 }
 
-export default function Welcome({ event }: WelcomeProps) {
+export default function Welcome({ event, title }: WelcomeProps) {
+    const { flash } = usePage();
+    const activePaymentUrl = (flash as any).paymentUrl || flash?.paymentUrl;
+
+    useEffect(() => {
+        if (
+            activePaymentUrl &&
+            typeof window.loadJokulCheckout === "function"
+        ) {
+            window.loadJokulCheckout(activePaymentUrl);
+        }
+    }, [activePaymentUrl]);
+
     if (!event) {
         return (
             <App>
@@ -50,7 +70,9 @@ export default function Welcome({ event }: WelcomeProps) {
 
     return (
         <App>
-            <Head title={event.name} />
+            <Head title={event.name + " - " + title}>
+                <script src="https://sandbox.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js" />
+            </Head>
 
             <div className="flex flex-col gap-y-3 items-center text-center w-full">
                 {event.logo_url ? (

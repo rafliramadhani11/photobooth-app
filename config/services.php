@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'doku' => [
+        'client_id' => env('DOKU_CLIENT_ID', "BRN-0210-1788852720493"),
+        'secret_key' => env('DOKU_SECRET_KEY', "SK-4nZIXoqfBScTHo6SRDRi"),
+        'is_production' => env('DOKU_IS_PRODUCTION', false),
+    ]
+
 ];

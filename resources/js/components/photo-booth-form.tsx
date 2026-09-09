@@ -17,6 +17,7 @@ import { Form } from "@inertiajs/react";
 import TransactionController from "@/actions/App/Http/Controllers/TransactionController";
 
 import { PackageItem } from "@/pages/welcome";
+import { useState } from "react";
 
 interface PhotoBoothFormProps {
     className?: string;
@@ -29,13 +30,22 @@ export default function PhotoBoothForm({
     eventId,
     packages = [],
 }: PhotoBoothFormProps) {
+    const [selectedPackageId, setSelectedPackageId] = useState<
+        number | undefined
+    >(packages[0]?.id);
+
     return (
         <Form
-            action={TransactionController.store()}
+            action={
+                eventId && selectedPackageId
+                    ? TransactionController.store({
+                          event: eventId,
+                          package: selectedPackageId,
+                      })
+                    : "#"
+            }
             className={cn("w-full", className)}
         >
-            {eventId && <input type="hidden" name="event_id" value={eventId} />}
-
             <FieldSet>
                 <FieldGroup>
                     {/* ATAS NAMA SIAPA */}
@@ -127,6 +137,7 @@ export default function PhotoBoothForm({
                     {/* FORM ACTIONS */}
                     <div className="w-full">
                         <Button
+                            type="submit"
                             size="lg"
                             className="w-full py-6 text-base font-bold shadow-lg transition-all duration-200 hover:scale-[1.01] active:scale-[0.98] flex items-center justify-between px-6 group"
                         >
