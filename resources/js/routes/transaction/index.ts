@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
  * @see app/Http/Controllers/TransactionController.php:22
  * @route '/transaction/{event}/{package}/checkout'
  */
-export const store = (args: { event: number | { id: number }, package: string | number | { id: string | number } } | [event: number | { id: number }, packageParam: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { event: number | { id: number }, package: number | { id: number } } | [event: number | { id: number }, packageParam: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/TransactionController.php:22
  * @route '/transaction/{event}/{package}/checkout'
  */
-store.url = (args: { event: number | { id: number }, package: string | number | { id: string | number } } | [event: number | { id: number }, packageParam: string | number | { id: string | number } ], options?: RouteQueryOptions) => {
+store.url = (args: { event: number | { id: number }, package: number | { id: number } } | [event: number | { id: number }, packageParam: number | { id: number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     event: args[0],
@@ -49,7 +49,7 @@ store.url = (args: { event: number | { id: number }, package: string | number | 
  * @see app/Http/Controllers/TransactionController.php:22
  * @route '/transaction/{event}/{package}/checkout'
  */
-store.post = (args: { event: number | { id: number }, package: string | number | { id: string | number } } | [event: number | { id: number }, packageParam: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { event: number | { id: number }, package: number | { id: number } } | [event: number | { id: number }, packageParam: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
