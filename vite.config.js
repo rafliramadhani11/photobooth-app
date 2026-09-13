@@ -14,8 +14,8 @@ export default defineConfig({
         react(),
         inertia(),
         tailwindcss(),
-        wayfinder(),
-    ],
+        !process.env.VERCEL && wayfinder(),
+    ].filter(Boolean),
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],
