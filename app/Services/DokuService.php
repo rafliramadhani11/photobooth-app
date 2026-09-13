@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class DokuService
 {
@@ -18,7 +19,7 @@ class DokuService
         $this->secretKey = config('services.doku.secret_key');
         $this->baseUrl = config('services.doku.is_production')
             ? 'https://api.doku.com'
-            : 'https://sandbox.doku.com';
+            : 'https://api-sandbox.doku.com';
     }
 
     public function createCheckout(array $payload)
@@ -29,7 +30,6 @@ class DokuService
         $bodyJson = json_encode($payload);
         $digest = base64_encode(hash('sha256', $bodyJson, true));
 
-        // PENTING: Request-Target WAJIB path relatif (/checkout/v1/payment)
         $rawSignature = "Client-Id:" . $this->clientId . "\n"
             . "Request-Id:" . $requestId . "\n"
             . "Request-Timestamp:" . $timestamp . "\n"
@@ -43,14 +43,16 @@ class DokuService
             'Request-Id' => $requestId,
             'Request-Timestamp' => $timestamp,
             'Signature' => 'HMACSHA256=' . $signature,
-            'Content-Type' => 'application/json',
-        ])->post($this->baseUrl . $this->targetPath, $payload);
+        ])->withBody($bodyJson, 'application/json')
+            ->post($this->baseUrl . $this->targetPath);
 
         if ($response->failed()) {
-            dd('DOKU Checkout Error', [
+            Log::error('DOKU Checkout Error', [
                 'status' => $response->status(),
                 'body' => $response->json(),
             ]);
+
+            throw new \RuntimeException('Gagal membuat checkout DOKU: ' . ($response->json('error.message') ?? 'unknown error'));
         }
 
         return $response->json();

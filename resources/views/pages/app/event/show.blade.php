@@ -136,21 +136,14 @@ new class extends Component {
                 <div class="flex items-center justify-between">
                     <div>
                         <flux:heading size="lg">Data Customer & Transaksi</flux:heading>
-                        <flux:subheading>Riwayat pembayaran QRIS Xendit dan status cetak foto customer.
+                        <flux:subheading>Riwayat pembayaran customer
                         </flux:subheading>
                     </div>
-                    <flux:badge size="sm" color="zinc">Segera Hadir</flux:badge>
                 </div>
 
                 <flux:separator variant="subtle" />
 
-                <div class="py-8 text-center border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg">
-                    <flux:icon icon="users" class="size-8 text-zinc-400 mx-auto mb-2 stroke-1.5" />
-                    <p class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Belum Ada Sesi Transaksi</p>
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-sm mx-auto">
-                        Daftar transaksi kasir dan status antrean cetak foto customer akan muncul di sini.
-                    </p>
-                </div>
+                <livewire:transaction.transaction-table />
             </flux:card>
         </div>
     </div>

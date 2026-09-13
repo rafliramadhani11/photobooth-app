@@ -7,41 +7,9 @@ use App\Services\DokuService;
 
 Route::get('/', [EventController::class, 'welcome'])
     ->name('home');
+
 Route::post('/transaction/{event}/{package}/checkout', [TransactionController::class, 'store'])
     ->name('transaction.store');
-
-Route::post('test-doku', function (DokuService $dokuService) {
-    $invoiceNumber = 'PB-' . date('YmdHis') . '-' . rand(100, 999);
-    $packageName = 'Paket Regular 3 Jam';
-    $price = 50000;
-
-    $payload = [
-        'order' => [
-            'amount' => $price,
-            'invoice_number' => $invoiceNumber,
-            'currency' => 'IDR',
-            'callback_url' => url('/'),
-            'line_items' => [
-                [
-                    'name' => "Sesi Photo Booth: {$packageName}",
-                    'price' => $price,
-                    'quantity' => 1,
-                ]
-            ]
-        ],
-        'payment' => [
-            'payment_due_date' => 30, // Batas waktu bayar dalam menit
-        ],
-        'customer' => [
-            'name' => 'Pelanggan Photo Booth',
-            'email' => 'customer@photobooth.local',
-        ]
-    ];
-
-    $response = $dokuService->createCheckout($payload);
-
-    return response()->json($response);
-});
 
 // AUTH ------------------------------------------------------------------------------------
 Route::middleware(['guest'])->group(function () {

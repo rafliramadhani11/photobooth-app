@@ -14,11 +14,5 @@
 
             </div>
         </div>
-
-
-        <form action="/test-doku" method="POST">
-            @csrf
-            <button type="submit">Test Checkout DOKU</button>
-        </form>
     </div>
 </x-layouts::app>

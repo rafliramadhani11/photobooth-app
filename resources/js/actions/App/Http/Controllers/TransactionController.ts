@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\TransactionController::store
- * @see app/Http/Controllers/TransactionController.php:21
+ * @see app/Http/Controllers/TransactionController.php:22
  * @route '/transaction/{event}/{package}/checkout'
  */
 export const store = (args: { event: number | { id: number }, package: number | { id: number } } | [event: number | { id: number }, packageParam: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\TransactionController::store
- * @see app/Http/Controllers/TransactionController.php:21
+ * @see app/Http/Controllers/TransactionController.php:22
  * @route '/transaction/{event}/{package}/checkout'
  */
 store.url = (args: { event: number | { id: number }, package: number | { id: number } } | [event: number | { id: number }, packageParam: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -46,7 +46,7 @@ store.url = (args: { event: number | { id: number }, package: number | { id: num
 
 /**
 * @see \App\Http\Controllers\TransactionController::store
- * @see app/Http/Controllers/TransactionController.php:21
+ * @see app/Http/Controllers/TransactionController.php:22
  * @route '/transaction/{event}/{package}/checkout'
  */
 store.post = (args: { event: number | { id: number }, package: number | { id: number } } | [event: number | { id: number }, packageParam: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({

@@ -50,7 +50,7 @@ export default function Welcome({ event, title }: WelcomeProps) {
     if (!event) {
         return (
             <App>
-                <Head title="Tidak Ada Event Aktif" />
+                <Head title={"Tidak Ada Event Aktif - " + title} />
                 <div className="flex flex-col items-center justify-center text-center p-8 bg-card text-card-foreground rounded-2xl border border-border shadow-sm max-w-md w-full">
                     <div className="size-16 rounded-full bg-muted flex items-center justify-center text-muted-foreground mb-4">
                         <Calendar className="size-8 stroke-[1.5]" />

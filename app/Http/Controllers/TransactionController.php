@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Package;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Livewire\Attributes\Computed;
 use App\Services\DokuService;
@@ -20,12 +21,23 @@ class TransactionController extends Controller
 
     public function store(Request $request, Event $event, Package $package)
     {
-        $invoice = 'PB-' . date('HisYmd') . '-' . rand(100, 999);
+        $this->createTransaction($request, $event, $package);
 
-        $payload = [
+        $payload = $this->createPayload($request, $event, $package);
+
+        $dokuResponse = $this->dokuService->createCheckout($payload);
+
+        $paymentUrl = $dokuResponse['response']['payment']['url'] ?? null;
+
+        return Inertia::flash('paymentUrl', $paymentUrl)->back();
+    }
+
+    protected function createPayload(Request $request, Event $event, Package $package): array
+    {
+        return  [
             'order' => [
                 'amount' => (int) $package->price,
-                'invoice_number' => $invoice,
+                'invoice_number' => 'PB-' . date('HisYmd') . '-' . rand(100, 999),
                 'currency' => 'IDR',
                 'callback_url' => url('/'),
                 'line_items' => [
@@ -43,11 +55,15 @@ class TransactionController extends Controller
                 'name' => $request->customer_name,
             ]
         ];
+    }
 
-        $dokuResponse = $this->dokuService->createCheckout($payload);
-
-        $paymentUrl = $dokuResponse['response']['payment']['url'] ?? null;
-
-        return Inertia::flash('paymentUrl', $paymentUrl)->back();
+    protected function createTransaction(Request $request, Event $event, Package $package): Transaction
+    {
+        return Transaction::create([
+            'event_id' => $event->id,
+            'package_id' => $package->id,
+            'invoice' => 'PB-' . date('HisYmd') . '-' . rand(100, 999),
+            'customer_name' => $request->customer_name,
+        ]);
     }
 }
