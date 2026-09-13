@@ -47,7 +47,6 @@
 
         "CACHE_DRIVER": "array",
         "SESSION_DRIVER": "cookie",
-        "HASH_DRIVER": "sha256",
 
         "LOG_CHANNEL": "stderr"
     }
