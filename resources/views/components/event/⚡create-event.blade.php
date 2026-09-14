@@ -48,6 +48,23 @@ new class extends Component {
         Flux::modal('create-event')->close();
         Flux::toast(variant: 'success', text: 'Event berhasil dibuat.');
     }
+
+    public function deleteTemporaryFileWhenEscapeAndDismissable(): void
+    {
+        if ($this->logo) {
+            $this->logo->delete();
+            $this->reset('logo');
+        }
+    }
+
+    public function removeLogo(): void
+    {
+        if ($this->logo) {
+            $this->logo->delete();
+        }
+
+        $this->reset('logo');
+    }
 };
 ?>
 
@@ -56,7 +73,8 @@ new class extends Component {
         <flux:button icon="plus" variant="primary" size="sm">New Event</flux:button>
     </flux:modal.trigger>
 
-    <flux:modal name="create-event" class="md:w-md">
+    <flux:modal name="create-event" class="md:w-md" wire:cancel="deleteTemporaryFileWhenEscapeAndDismissable"
+        wire:close="deleteTemporaryFileWhenEscapeAndDismissable">
         <form wire:submit="save" class="space-y-5">
             <div>
                 <flux:heading size="lg">Create Event</flux:heading>
@@ -82,51 +100,53 @@ new class extends Component {
             <div class="space-y-2">
                 <flux:label>Logo / Foto Event</flux:label>
                 @if ($logo)
+                <div
+                    class="flex items-center gap-4 p-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40">
                     <div
-                        class="flex items-center gap-4 p-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40">
-                        <div
-                            class="relative size-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-xs">
-                            <img src="{{ $logo->temporaryUrl() }}" alt="Preview Logo" class="size-full object-cover">
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-zinc-900 dark:text-zinc-100 truncate">
-                                {{ method_exists($logo, 'getClientOriginalName') ? $logo->getClientOriginalName() : 'Foto Terpilih' }}
-                            </p>
-                            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Siap diunggah</p>
-                            <div class="mt-2 flex items-center gap-2">
-                                <flux:button wire:click="$set('logo', null)" type="button" size="xs"
-                                    variant="danger" icon="trash">
-                                    Hapus
-                                </flux:button>
-                            </div>
+                        class="relative size-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-xs">
+                        <img src="{{ $logo->temporaryUrl() }}" alt="Preview Logo" class="size-full object-cover">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-medium text-zinc-900 dark:text-zinc-100 truncate">
+                            {{ method_exists($logo, 'getClientOriginalName') ? $logo->getClientOriginalName() : 'Foto Terpilih' }}
+                        </p>
+                        <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Siap diunggah</p>
+                        <div class="mt-2 flex items-center gap-2">
+                            <flux:button wire:click="removeLogo" wire:loading.attr="disabled"
+                                wire:target="removeLogo" type="button" size="xs" variant="danger"
+                                icon="trash">
+                                <span wire:loading.remove wire:target="removeLogo">Batalkan</span>
+                                <span wire:loading wire:target="removeLogo">Menghapus...</span>
+                            </flux:button>
                         </div>
                     </div>
+                </div>
                 @else
-                    <label wire:loading.class="opacity-60 pointer-events-none" wire:target="logo"
-                        class="group relative flex flex-col items-center justify-center p-5 border-2 border-dashed border-zinc-200 dark:border-zinc-700 hover:border-sky-500 dark:hover:border-sky-400 rounded-xl cursor-pointer bg-zinc-50/50 dark:bg-zinc-800/30 hover:bg-sky-50/30 dark:hover:bg-sky-950/20 transition-colors">
-                        <div
-                            class="p-2.5 rounded-full bg-white dark:bg-zinc-800 shadow-xs text-zinc-400 group-hover:text-sky-500 dark:group-hover:text-sky-400 group-hover:scale-110 transition-transform">
-                            <flux:icon wire:loading.remove wire:target="logo" icon="arrow-up-tray" class="size-5" />
-                            <flux:icon.loading wire:loading wire:target="logo" class="size-5" />
-                        </div>
-                        <div class="text-center mt-2.5">
-                            <span wire:loading.remove wire:target="logo"
-                                class="text-xs font-medium text-zinc-700 dark:text-zinc-200 group-hover:text-sky-600 dark:group-hover:text-sky-400">
-                                Klik untuk upload logo
-                            </span>
-                            <span wire:loading wire:target="logo"
-                                class="text-xs font-medium text-sky-600 dark:text-sky-400">
-                                Mengupload...
-                            </span>
-                            <span wire:loading.remove wire:target="logo" class="text-zinc-400 text-xs"> atau drag &
-                                drop</span>
-                            <p wire:loading.remove wire:target="logo"
-                                class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">
-                                PNG, JPG, atau WEBP (Maks. 1MB)
-                            </p>
-                        </div>
-                        <input wire:model="logo" type="file" accept="image/*" class="sr-only" />
-                    </label>
+                <label wire:loading.class="opacity-60 pointer-events-none" wire:target="logo"
+                    class="group relative flex flex-col items-center justify-center p-5 border-2 border-dashed border-zinc-200 dark:border-zinc-700 hover:border-sky-500 dark:hover:border-sky-400 rounded-xl cursor-pointer bg-zinc-50/50 dark:bg-zinc-800/30 hover:bg-sky-50/30 dark:hover:bg-sky-950/20 transition-colors">
+                    <div
+                        class="p-2.5 rounded-full bg-white dark:bg-zinc-800 shadow-xs text-zinc-400 group-hover:text-sky-500 dark:group-hover:text-sky-400 group-hover:scale-110 transition-transform">
+                        <flux:icon wire:loading.remove wire:target="logo" icon="arrow-up-tray" class="size-5" />
+                        <flux:icon.loading wire:loading wire:target="logo" class="size-5" />
+                    </div>
+                    <div class="text-center mt-2.5">
+                        <span wire:loading.remove wire:target="logo"
+                            class="text-xs font-medium text-zinc-700 dark:text-zinc-200 group-hover:text-sky-600 dark:group-hover:text-sky-400">
+                            Klik untuk upload logo
+                        </span>
+                        <span wire:loading wire:target="logo"
+                            class="text-xs font-medium text-sky-600 dark:text-sky-400">
+                            Mengupload...
+                        </span>
+                        <span wire:loading.remove wire:target="logo" class="text-zinc-400 text-xs"> atau drag &
+                            drop</span>
+                        <p wire:loading.remove wire:target="logo"
+                            class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">
+                            PNG, JPG, atau WEBP (Maks. 1MB)
+                        </p>
+                    </div>
+                    <input wire:model="logo" type="file" accept="image/*" class="sr-only" />
+                </label>
                 @endif
                 <flux:error name="logo" />
             </div>
