@@ -12,7 +12,7 @@ new class extends Component {
     {
         $this->event->delete();
 
-        Storage::disk('public')->delete($this->event->logo);
+        Storage::disk('s3')->delete($this->event->logo);
 
         Flux::modal('delete-event-' . $this->event->id)->close();
         Flux::toast(variant: 'success', text: 'Event berhasil dihapus.');

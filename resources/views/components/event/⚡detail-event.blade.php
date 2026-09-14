@@ -37,11 +37,12 @@ new class extends Component {
         ]);
 
         if ($this->logo) {
-            if ($this->event->logo && Storage::disk('public')->exists($this->event->logo)) {
-                Storage::disk('public')->delete($this->event->logo);
+            if ($this->event->logo && Storage::disk('s3')->exists($this->event->logo)) {
+                Storage::disk('s3')->delete($this->event->logo);
             }
 
-            $validated['logo'] = $this->logo->store('event-logo', 'public');
+            $validated['logo'] = $this->logo->store('event-logo');
+            $this->logo->delete();
         } else {
             unset($validated['logo']);
         }
@@ -101,7 +102,7 @@ new class extends Component {
                     class="flex items-center gap-4 p-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40">
                     <div
                         class="relative size-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-xs">
-                        <img src="{{ asset('storage/' . $event->logo) }}" alt="Logo Event"
+                        <img src="{{ Storage::disk('s3')->url($event->logo) }}" alt="Logo Event"
                             class="size-full object-cover">
                     </div>
                     <div class="flex-1 min-w-0">
@@ -133,7 +134,8 @@ new class extends Component {
                             Klik untuk upload logo
                         </span>
                         <span class="text-zinc-400 text-xs"> atau drag & drop</span>
-                        <p class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">PNG, JPG, atau WEBP (Maks. 1MB)</p>
+                        <p class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">PNG, JPG, atau WEBP (Maks. 1MB)
+                        </p>
                     </div>
                     <input wire:model="logo" type="file" accept="image/*" class="sr-only" />
                 </label>

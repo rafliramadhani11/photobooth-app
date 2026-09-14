@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
-@source "../../flux-pro/stubs";
 @source "../stubs";
 
 @theme {

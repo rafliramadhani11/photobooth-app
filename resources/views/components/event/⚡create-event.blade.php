@@ -34,7 +34,10 @@ new class extends Component {
             ],
         );
 
-        $validated['logo'] = $this->logo->store('event-logo', 'public');
+        if ($this->logo) {
+            $validated['logo'] = $this->logo->store('event-logo');
+            $this->logo->delete();
+        }
 
         Event::create($validated);
 
