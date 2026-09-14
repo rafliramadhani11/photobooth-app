@@ -8,16 +8,24 @@ use Livewire\Component;
 new class extends Component {
     public Event $event;
 
+    public function mount(Event $event)
+    {
+        $this->event = $event;
+    }
+
     public function delete(): void
     {
         $this->event->delete();
 
-        Storage::disk('s3')->delete($this->event->logo);
+        if ($this->event->logo) {
+            Storage::disk('s3')->delete($this->event->logo);
+        }
 
         Flux::modal('delete-event-' . $this->event->id)->close();
-        Flux::toast(variant: 'success', text: 'Event berhasil dihapus.');
 
         $this->dispatch('event-updated');
+
+        Flux::toast(variant: 'success', text: 'Event berhasil dihapus.');
     }
 };
 ?>
@@ -25,7 +33,8 @@ new class extends Component {
 <div>
     {{-- Trigger Button dengan Ikon Trash --}}
     <flux:modal.trigger :name="'delete-event-' . $event->id">
-        <flux:button icon="trash" size="sm" variant="danger" tooltip="Hapus Event" class="cursor-pointer">
+        <flux:button wire:loading.attr="disabled" icon="trash" size="sm" variant="danger" tooltip="Hapus Event"
+            class="cursor-pointer">
             Hapus
         </flux:button>
     </flux:modal.trigger>

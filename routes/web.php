@@ -4,15 +4,6 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/debug-php', function () {
-    return response()->json([
-        'openssl_loaded' => extension_loaded('openssl'),
-        'hash_loaded'    => extension_loaded('hash'),
-        'sodium_loaded'  => extension_loaded('sodium'),
-        'bcrypt_defined' => defined('PASSWORD_BCRYPT'),
-    ]);
-});
-
 Route::get('/', [EventController::class, 'welcome'])
     ->name('home');
 

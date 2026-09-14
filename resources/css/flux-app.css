@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @source "../stubs";
@@ -728,3 +729,5 @@ Timeline
 [data-flux-timeline-item]:not(:last-child) [data-flux-timeline-block]~[data-flux-timeline-gap-trailing] {
     height: var(--flux-timeline-item-gap);
 }
+
+

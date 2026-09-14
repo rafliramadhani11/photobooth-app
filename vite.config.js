@@ -8,7 +8,11 @@ import { wayfinder } from "@laravel/vite-plugin-wayfinder";
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/css/flux-app.css'],
+            input: [
+                'resources/css/app.css',
+                'resources/css/flux-app.css',
+                'resources/js/app.js',
+            ],
             refresh: true,
         }),
         react(),
