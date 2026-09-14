@@ -102,19 +102,27 @@ new class extends Component {
                         </div>
                     </div>
                 @else
-                    <label
+                    <label wire:loading.class="opacity-60 pointer-events-none" wire:target="logo"
                         class="group relative flex flex-col items-center justify-center p-5 border-2 border-dashed border-zinc-200 dark:border-zinc-700 hover:border-sky-500 dark:hover:border-sky-400 rounded-xl cursor-pointer bg-zinc-50/50 dark:bg-zinc-800/30 hover:bg-sky-50/30 dark:hover:bg-sky-950/20 transition-colors">
                         <div
                             class="p-2.5 rounded-full bg-white dark:bg-zinc-800 shadow-xs text-zinc-400 group-hover:text-sky-500 dark:group-hover:text-sky-400 group-hover:scale-110 transition-transform">
-                            <flux:icon icon="arrow-up-tray" class="size-5" />
+                            <flux:icon wire:loading.remove wire:target="logo" icon="arrow-up-tray" class="size-5" />
+                            <flux:icon.loading wire:loading wire:target="logo" class="size-5" />
                         </div>
                         <div class="text-center mt-2.5">
-                            <span
+                            <span wire:loading.remove wire:target="logo"
                                 class="text-xs font-medium text-zinc-700 dark:text-zinc-200 group-hover:text-sky-600 dark:group-hover:text-sky-400">
                                 Klik untuk upload logo
                             </span>
-                            <span class="text-zinc-400 text-xs"> atau drag & drop</span>
-                            <p class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">PNG, JPG, atau WEBP (Maks. 1MB)
+                            <span wire:loading wire:target="logo"
+                                class="text-xs font-medium text-sky-600 dark:text-sky-400">
+                                Mengupload...
+                            </span>
+                            <span wire:loading.remove wire:target="logo" class="text-zinc-400 text-xs"> atau drag &
+                                drop</span>
+                            <p wire:loading.remove wire:target="logo"
+                                class="text-[11px] text-zinc-400 dark:text-zinc-500 mt-1">
+                                PNG, JPG, atau WEBP (Maks. 1MB)
                             </p>
                         </div>
                         <input wire:model="logo" type="file" accept="image/*" class="sr-only" />
@@ -129,7 +137,9 @@ new class extends Component {
                 <flux:modal.close>
                     <flux:button variant="ghost">Batal</flux:button>
                 </flux:modal.close>
-                <flux:button type="submit" variant="primary">Create Event</flux:button>
+                <flux:button type="submit" variant="primary">
+                    Create Event
+                </flux:button>
             </div>
         </form>
     </flux:modal>

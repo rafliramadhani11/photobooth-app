@@ -104,19 +104,33 @@ new class extends Component {
                     </div>
                 @elseif ($event->logo)
                     {{-- Foto yang tersimpan saat ini --}}
-                    <div
-                        class="flex items-center gap-4 p-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40">
+                    <div wire:loading.class="opacity-60" wire:target="logo"
+                        class="flex items-center gap-4 p-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40 transition-opacity">
                         <div
                             class="relative size-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-xs">
                             <img src="{{ Storage::disk('s3')->url($event->logo) }}" alt="Logo Event"
                                 class="size-full object-cover">
+
+                            {{-- Overlay spinner saat upload foto pengganti --}}
+                            <div wire:loading wire:target="logo"
+                                class="absolute inset-0 flex items-center justify-center bg-black/40">
+                                <flux:icon.loading class="size-5 text-white" />
+                            </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-zinc-900 dark:text-zinc-100 truncate">
+                            <p wire:loading.remove wire:target="logo"
+                                class="text-xs font-medium text-zinc-900 dark:text-zinc-100 truncate">
                                 Logo Tersimpan
                             </p>
-                            <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">Digunakan saat ini</p>
-                            <div class="mt-2 flex items-center gap-2">
+                            <p wire:loading wire:target="logo"
+                                class="text-xs font-medium text-sky-600 dark:text-sky-400 truncate">
+                                Mengupload foto baru...
+                            </p>
+                            <p wire:loading.remove wire:target="logo"
+                                class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                Digunakan saat ini
+                            </p>
+                            <div wire:loading.remove wire:target="logo" class="mt-2 flex items-center gap-2">
                                 <label
                                     class="cursor-pointer inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-600 text-zinc-700 dark:text-zinc-200 transition-colors">
                                     <flux:icon icon="arrow-path" class="size-3.5" />
