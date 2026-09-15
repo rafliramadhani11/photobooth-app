@@ -14,7 +14,6 @@
     }
 </style>
 
-
 <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
 <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/png">
 

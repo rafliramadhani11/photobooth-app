@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/flux-app.css',
                 'resources/js/app.js',
+                'resources/js/components/charts.tsx',
             ],
             refresh: true,
         }),

@@ -9,3 +9,4 @@ createInertiaApp({
         transform: (name, page) => name.replace('/', '-'),
     },
 })
+

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \Flux\AssetManager::fluxJs
- * @see vendor/livewire/flux/src/AssetManager.php:86
+ * @see vendor/livewire/flux/src/AssetManager.php:88
  * @route '/flux/flux.js'
  */
 export const fluxJs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ fluxJs.definition = {
 
 /**
 * @see \Flux\AssetManager::fluxJs
- * @see vendor/livewire/flux/src/AssetManager.php:86
+ * @see vendor/livewire/flux/src/AssetManager.php:88
  * @route '/flux/flux.js'
  */
 fluxJs.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ fluxJs.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Flux\AssetManager::fluxJs
- * @see vendor/livewire/flux/src/AssetManager.php:86
+ * @see vendor/livewire/flux/src/AssetManager.php:88
  * @route '/flux/flux.js'
  */
 fluxJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ fluxJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Flux\AssetManager::fluxJs
- * @see vendor/livewire/flux/src/AssetManager.php:86
+ * @see vendor/livewire/flux/src/AssetManager.php:88
  * @route '/flux/flux.js'
  */
 fluxJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ fluxJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \Flux\AssetManager::fluxMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:92
+ * @see vendor/livewire/flux/src/AssetManager.php:94
  * @route '/flux/flux.min.js'
  */
 export const fluxMinJs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ fluxMinJs.definition = {
 
 /**
 * @see \Flux\AssetManager::fluxMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:92
+ * @see vendor/livewire/flux/src/AssetManager.php:94
  * @route '/flux/flux.min.js'
  */
 fluxMinJs.url = (options?: RouteQueryOptions) => {
@@ -68,7 +68,7 @@ fluxMinJs.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Flux\AssetManager::fluxMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:92
+ * @see vendor/livewire/flux/src/AssetManager.php:94
  * @route '/flux/flux.min.js'
  */
 fluxMinJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -77,7 +77,7 @@ fluxMinJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Flux\AssetManager::fluxMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:92
+ * @see vendor/livewire/flux/src/AssetManager.php:94
  * @route '/flux/flux.min.js'
  */
 fluxMinJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -87,7 +87,7 @@ fluxMinJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \Flux\AssetManager::editorCss
- * @see vendor/livewire/flux/src/AssetManager.php:98
+ * @see vendor/livewire/flux/src/AssetManager.php:100
  * @route '/flux/editor.css'
  */
 export const editorCss = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -102,7 +102,7 @@ editorCss.definition = {
 
 /**
 * @see \Flux\AssetManager::editorCss
- * @see vendor/livewire/flux/src/AssetManager.php:98
+ * @see vendor/livewire/flux/src/AssetManager.php:100
  * @route '/flux/editor.css'
  */
 editorCss.url = (options?: RouteQueryOptions) => {
@@ -111,7 +111,7 @@ editorCss.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Flux\AssetManager::editorCss
- * @see vendor/livewire/flux/src/AssetManager.php:98
+ * @see vendor/livewire/flux/src/AssetManager.php:100
  * @route '/flux/editor.css'
  */
 editorCss.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -120,7 +120,7 @@ editorCss.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Flux\AssetManager::editorCss
- * @see vendor/livewire/flux/src/AssetManager.php:98
+ * @see vendor/livewire/flux/src/AssetManager.php:100
  * @route '/flux/editor.css'
  */
 editorCss.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -130,7 +130,7 @@ editorCss.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \Flux\AssetManager::editorJs
- * @see vendor/livewire/flux/src/AssetManager.php:104
+ * @see vendor/livewire/flux/src/AssetManager.php:106
  * @route '/flux/editor.js'
  */
 export const editorJs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -145,7 +145,7 @@ editorJs.definition = {
 
 /**
 * @see \Flux\AssetManager::editorJs
- * @see vendor/livewire/flux/src/AssetManager.php:104
+ * @see vendor/livewire/flux/src/AssetManager.php:106
  * @route '/flux/editor.js'
  */
 editorJs.url = (options?: RouteQueryOptions) => {
@@ -154,7 +154,7 @@ editorJs.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Flux\AssetManager::editorJs
- * @see vendor/livewire/flux/src/AssetManager.php:104
+ * @see vendor/livewire/flux/src/AssetManager.php:106
  * @route '/flux/editor.js'
  */
 editorJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -163,7 +163,7 @@ editorJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Flux\AssetManager::editorJs
- * @see vendor/livewire/flux/src/AssetManager.php:104
+ * @see vendor/livewire/flux/src/AssetManager.php:106
  * @route '/flux/editor.js'
  */
 editorJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -173,7 +173,7 @@ editorJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \Flux\AssetManager::editorMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:110
+ * @see vendor/livewire/flux/src/AssetManager.php:112
  * @route '/flux/editor.min.js'
  */
 export const editorMinJs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -188,7 +188,7 @@ editorMinJs.definition = {
 
 /**
 * @see \Flux\AssetManager::editorMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:110
+ * @see vendor/livewire/flux/src/AssetManager.php:112
  * @route '/flux/editor.min.js'
  */
 editorMinJs.url = (options?: RouteQueryOptions) => {
@@ -197,7 +197,7 @@ editorMinJs.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Flux\AssetManager::editorMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:110
+ * @see vendor/livewire/flux/src/AssetManager.php:112
  * @route '/flux/editor.min.js'
  */
 editorMinJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -206,7 +206,7 @@ editorMinJs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Flux\AssetManager::editorMinJs
- * @see vendor/livewire/flux/src/AssetManager.php:110
+ * @see vendor/livewire/flux/src/AssetManager.php:112
  * @route '/flux/editor.min.js'
  */
 editorMinJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
